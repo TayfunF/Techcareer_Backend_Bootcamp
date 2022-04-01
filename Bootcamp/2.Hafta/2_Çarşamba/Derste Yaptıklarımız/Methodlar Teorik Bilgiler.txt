@@ -1,0 +1,149 @@
+fonksiyon & prosedürler (En Çok Kullanılan)
+event & delegate (En Çok Kullanılan) OOP tarafında.
+-----------------------------------------------------------------------------------
+Method => Bir işi veya ona benzer bir işi birden fazla kez kodlamak yerine kullanılan yöntem.
+Örneğin : Ekrana mesaj çıkarma vs yapıyoruz.
+-----------------------------------------------------------------------------------
+Fonksiyon => En bariz fark geri döndürmeye ihtiyaç varsa  tanımlıyosun
+Prosedür  => Bir işte return yoksa. Geri döndürmeyle uğraşmaz.
+Aksi belirtilmediği sürece ve özel bir yöntem kullanmadığın sürece prosedürler geri bilgirimde bulunmaz.
+-----------------------------------------------------------------------------------
+--Niye Tanımlarız--
+
+İhtiyaç var mı diye bakarız.
+
+C# Procedure ;
+
+[Erişim Belirleyici] void ProcedureName(int param1, int param2)
+{
+//Codes
+}
+[Erişim Belirleyici] void ProcedureName(params int[] parameters)
+{
+//Codes
+}
+-----------------------------------------------------------------------------------
+C# Function ;
+[Erişim Belirleyici] DönüşTipi FunctionName(ParamtreTipi ParametreAdı)
+{
+// Kod Bloğu
+return DönüşTipindeDeğer;
+}
+
+private int Total = 111; =>Değişken Tanımı
+private int Total()
+{
+	return 1;
+} 
+
+private double SumTotal(double Number1, double Number2 = 0, double Number3 = 0,)
+{
+	return Number1 + Number2 + Number3;
+}
+-----------------------------------------------------------------------------------
+Not : params ve tanımlamış değerler mutlaka sonda olmalı !
+-----------------------------------------------------------------------------------
+
+Bir tane procedure tanımlayalım :
+[Bu kod çalışmıyor. Hayal etmemiz adına böyle kullandık
+
+enum TOpenType {_None, _Blank, _Top };
+private void GoToUrl(String AUrl , TOpenType OpenType)
+{
+	response.redirect(AUrl, OpenType);
+}
+
+Şimdi bunu çağıralım :
+
+GoToUrl("http://www.google.com",TOpenType._Blank);
+
+GoToUrl 'de response 'un çalışabilmesi için içerisine 'http' koymamız gerekiyor.
+
+-----------------------------------------------------------------------------------
+
+4 değer gönderildi. 1 ve 3 'ü elemanını topla. 2 ve 4. elemanını çıkar.
+
+private double[] SumAndMines(params double[] Numbers)
+{
+	double[] Result = new double[2]{0,0};
+	
+	Result[0] = Number[0] + Number [2];
+	Result[1] = Number[3] - number [1]; 
+	
+	return Result;
+}
+
+-----------------------------------------------------------------------------------
+Overload Nedir ?? => 
+1-) Aynı isimde oluşturulan methodlardır.
+2-) Ya bir fazla parametre olacak ya da bir kesik paramatre olacak.
+3-) Eğer bir eksik ya da bir fazla olma durumu sağlanamıyorsa 'Parametre Tipleri' farklı olacak.
+4-) 3.Madde sayisal ifadeler için geçerli değil (double,int vs)
+-----------------------------------------------------------------------------------
+Örnek Prosedür İçin :
+
+private void DoSum()
+{
+	double Sum = 0;
+	Sum = FirstNumber + SecondNumber;
+	LblSonuc.Text = Sum.ToString();
+}
+
+private void DoSum(double FirstNumber, double SecondNumber)
+{
+	double Sum = 0;
+	Sum = FirstNumber + SecondNumber;
+	LblSonuc.Text = Sum.ToString();
+}
+
+-----------------------------------------------------------------------------------
+#region Procedure 
+	//Kullanılmayan Kodları içerisine yazarız.
+#endregion
+-----------------------------------------------------------------------------------
+Örnek Fonksiyon İçin :
+
+private double SumMind(double FirstNumber, double SecondNumber)
+{
+	double Result = 0;
+	Result = FirstNumber + SecondNumber;
+	return Result;
+}
+-----------------------------------------------------------------------------------
+
+Out ve Ref Kavramları Nedir ?
+
+Bir metodda birden fazla geri dönüş değeri alacaksak kullanırız.
+İkiside opsiyonel olamaz !!!
+
+out => Tanımlandığı yerde mutlak geri dönüş değeri almalı.
+ref => Çağrıldığı yerde mutlak başlangıç değeri almak zorunda.
+
+-----------------------------------------------------------------------------------
+Örnek Procedure out :
+
+void MethodAdi(double a, double b, out double SumTotal)
+{
+	SumTotal = a + b;
+}
+
+void MethodAdi(double a, double b, out double SumTotal)
+{
+	SumTotal = 0;
+	response.redirect("url");
+}
+
+void MethodAdi(double a, double b, out double SumTotal)
+{
+	double Result = a + b;
+	SumTotal = Result;
+}
+-----------------------------------------------------------------------------------
+Örnek Function Ref :
+
+void MethodAdi(double a, double b, ref double SumTotal)
+{
+	double Result = a + b;
+	SumTotal = Result;
+}
+-----------------------------------------------------------------------------------
