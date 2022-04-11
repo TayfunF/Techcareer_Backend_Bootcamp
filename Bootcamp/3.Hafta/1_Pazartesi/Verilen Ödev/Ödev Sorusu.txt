@@ -1,7 +1,0 @@
-Runtime anında WinForm ile (8 X 8 = 64) satranç tahtası yapılacak.
-
-1 siyah 1 beyaz kutu yapıcaz.
-
-Panel içerisine koyulabilir.
-
-(Üstüste gelme durumu var. Onları hesapla)
