@@ -1,0 +1,60 @@
+Application : Çok nadir değişecek ya da hiç değişmeyecek ama aynı zamanda database de saklanmasını
+istediğimiz veriler olabilir. Projenin webconfig 'ine yazmak istemediğimiz vb. durumlarda kullandığımız bir yapı.
+
+> Application burada kelime anlamı olarak uygulama anlamında değildir !!
+> Application tıpkı sessionlar gibi memory 'de yer kaplarlar. Fakat sessionlar kişiye özeldirler.
+> Örneğin : Bir oturum açtık tutulan session bize özeldir. 
+> Yorumlayıcı (IIS , apache tomcat, glassfish gibi).
+
+Peki Application ve Sessionlar arasında ki fark nedir ? 
+
+1-) Sessionlar kişiye özeldir ve sunucu tarafında saklanır.
+2-) Application da session benzeridir. Yani uygulama ayağa kalktığında memory 'e yerleşir fakat kişiye özel değildir herkes ulaşır. 
+3-) Uygulama tekrar ayağa kaldırılana kadar (IIS restart olana kadar) ya da uygulama sonlanana (down) olana kadar memory de durur.
+
+Application Nasıl Kullanılır ??
+
+1-) Projemizin Presantation katmanında ki Global.asax 'ı açıyoruz.
+2-) Global.asax içerisinde override benzeri metodlar vardır ve bunlar Global : HttpApplication class ının içindedir.
+3-) Global.asax içerisinde zaten Application_Start adında bir void (prosedür) var.
+
+[Not => Bu Global.asax içerisine Application haricinde istersek session da koyabiliriz ;]
+
+	//KİŞİYE ÖZEL KODLAMA YAPACAKSAK Application YERİNE SESSION İÇİNE YAPABİLMEK İÇİN
+	// Örneğin : Kullanıcı Login oldu mu olmadı mı diye görmek istersek Sessiona koyarız.
+	void Session_Start()
+        {
+            // Kullanıcı istekte bulundugu an 
+        }
+
+        void Session_End()
+        {
+            // Kullanıcı oturumu kapattigi an
+        }
+		
+4-) Application_Start içerisine şunu yaz ;
+
+	TBusinessLayer BusinessLayer = new TBusinessLayer();
+        string OMessage;
+        Application["TblOpeningHour"] = BusinessLayer.GetOpeningHours(out OMessage);
+
+5-) Views --> MainBody.cshtml içerisinde kullan ;
+		
+		@{
+                        List<PortalDataLayer.TblOpeningHour> OpeningHours = (List<PortalDataLayer.TblOpeningHour>)(HttpContext.Current.Application["TblOpeningHour"]);
+
+                        if (OpeningHours != null)
+                        {
+                            if (OpeningHours.Count > 0)
+                            {
+                                foreach (var item in OpeningHours)
+                                {
+                                    <li class="clearfix py-3">
+                                        <span class="float-left">  Monday - Friday </span>
+                                        <div class="value float-right"> 9.00 - 20.00 </div>
+                                    </li>
+                                }
+                            }
+                        }
+                    }
+	

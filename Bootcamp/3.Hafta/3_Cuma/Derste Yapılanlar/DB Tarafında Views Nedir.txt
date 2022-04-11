@@ -1,0 +1,23 @@
+Views --> Bir tablonun veya birden fazla tablonun yansımasıdır. Yani bir şeyi uzun uzun kodlarla backend(C#) tarafında yazmak yerine, 
+Db tarafında 2 3 tabloyu birleştirirsek ve kuralını burada yazarsaktek çıktı olarak bize verir.
+
+1-) TblOpeninHour tablosuna değerler giriyoruz. (1,2,3,4,5,6,7 gibi)
+
+2-) SQLServer Management Studio da New Query diyip sorgumuzu yazıyoruz ;
+	
+	create view VWOpeningHour as 
+	select *,
+	
+	case 
+	when [DayOfWeek] = 1 then 'Pzt'
+	when [DayOfWeek] = 2 then 'Salı'
+	when [DayOfWeek] = 3 then 'Çarş'
+	when [DayOfWeek] = 4 then 'Perş'
+	when [DayOfWeek] = 5 then 'Cuma'
+	when [DayOfWeek] = 6 then 'Cmt'
+	when [DayOfWeek] = 7 then 'Pzr'
+	End DayName 
+
+	from TblOpeningHours where Active = 1;
+
+3-)
